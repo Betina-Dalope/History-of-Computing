@@ -2,6 +2,7 @@
 <html>
   <head>
     <title>Difference Engine Simulator</title>
+    <meta charset="UTF-8"> 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
     <script src=“main.js”></script>
   </head>
@@ -10,12 +11,14 @@
     <h1>Difference Engine Simulator>
     <h3>Betina Dalope<br/>mrd88<br/>April 17, 2017</h3>
 
-    <form id=“inputs>
-      <input name=“x” placeholder=“x” type=“text”/>
-      <input name=“f(x)” placeholder=“f(x)” type=“text”/>
-      <input name=“Δf(x)2” placeholder=“Δf(x)2” type=“text”/>
-      <input name=“Δf(x)3” placeholder=“Δf(x)3” type=“text”/>
-      <div onclick=“processInputs()”>Submit</div>
+    <form id="inputs">
+      <input name="x" placeholder="x" type="text"/>
+      <input name="f(x)" placeholder="f(x)" type="text"/>
+      <input name="f(x)" placeholder="&Delta;f(x)&sup2;" type="text"/>
+      <input name="f(x)" placeholder="&Delta;f(x)&sup3;" type="text"/>
+      <input name="f(x)" placeholder="&Delta;f(x)&#8308;" type="text"/>
+      <input name="f(x)" placeholder="&Delta;f(x)&#8309;" type="text"/>
+      <div onclick="processInputs()">Submit</div>
     </form>
   </body>
 </html>
