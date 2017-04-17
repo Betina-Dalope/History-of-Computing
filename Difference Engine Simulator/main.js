@@ -11,20 +11,23 @@ function processInputs() {
     row1.push(val);
   }
 
+  $("#output").append("<br/>").append(row1.toString());
+
   currentRow = row1;
-  for (var i = 0; i < inputs[0].value; i++) {
+  for (var i = 0; i < inputs[0].value - 1; i++) {
     calculateNextRow();
   }
 }
 
 function calculateNextRow() {
-  console.log("calculating row", currentRow);
   
   var nextRow = [];
   currentRow.forEach(function(value, index) {
     if (index == currentRow.length - 1) nextRow.push(0);
     else nextRow.push(value + currentRow[index + 1])
   })
+
+  $("#output").append("<br/>").append(nextRow.toString());
 
   currentRow = nextRow;
 }
