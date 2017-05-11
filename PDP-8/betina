@@ -1,0 +1,26 @@
+//PDP-8 Assembly Code
+//Betina Dalope
+//mrd88@drexel.edu
+
+
+//This program prints 'BETINA' to the console.
+
+Addr		Octal		Opcode
+00004		0010						//stores address of the next letter to print (called pointer)
+00010		0102						//B
+00011		0105						//E
+00012		0124						//T
+00013		0111						//I
+00014		0116						//N
+00015		0101						//A
+
+
+00200		6007		CAF				//clear flags
+00201		7200		CLA 			//clear AC
+00202		1404		TAD I 4			//print contents of pointer
+00203		7440		SZA				//halt if pointer points to empty address
+00204		5206		JMP .+2
+00205		7402		HLT
+00206		6046		TLS				//print to console
+00207		2004		ISZ 4			//move pointer to next
+00210		5201		JMP 201			//loop
