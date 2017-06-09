@@ -16,7 +16,7 @@ var processor = {
 		counter = -2;
 	},
 	singleEP: function() {
-		if (io.input.length === 0)
+		if (Object.keys(io.input).length === 0)
 			io.parseInstruction();	
 		this.executeInstruction();
 		io.updateDisplays();
@@ -45,7 +45,7 @@ var io = {
 	input: {}, // instruction location # : { opcode: #, number: # }
 	parseInstruction: function() {
 		var lines = $("#paper-tape-reader").val().split('\n');
-
+		console.log("lines", lines);
 		for(var i = 0; i < lines.length; i++){
 			var location = processor.counter + i;
 			var number = lines[i].slice(1, -1);
@@ -58,8 +58,10 @@ var io = {
 			}
 		}
 	},
-	print: function() {
-
+	print: function(number) {
+		var character = memory[number] ? memory[number] : this.input[number];
+		console.log("number", number, this.input[number]);
+		$("#teleprinter").append(character);
 	},
 	updateDisplays: function() {
 		$("#counter").html(processor.counter);

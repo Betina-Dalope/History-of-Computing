@@ -6,7 +6,16 @@ var instructions = { //part of the ALU
 	},
 	G: function(number) {
 		console.log("G");
-		if (processor.accumulator < 0)
-			counter = number - 1;
+		if (processor.accumulator <= 0)
+			processor.counter = number;
+	},
+	Z: function() {
+		console.log("Z");
+		processor.stop();
+		//ring alarm bell
+	},
+	O: function(number) {
+		console.log("O");
+		io.print(number);
 	}
 }
