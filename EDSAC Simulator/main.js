@@ -5,7 +5,7 @@ var processor = {
 	accumulator: 0,
 	continue: true,
 	start: function() {
-		io.parseInstruction();
+		io.loadInstructions();
 		this.execute();
 		io.updateDisplays();
 	},
@@ -16,14 +16,16 @@ var processor = {
 		counter = -2;
 	},
 	singleEP: function() {
-		if (Object.keys(io.input).length === 0)
-			io.parseInstruction();	
+		if (Object.keys(memory).length === 0)
+			io.loadInstructions();	
 		this.executeInstruction();
 		io.updateDisplays();
 	},
 	executeInstruction: function() {
-		var opcode = io.input[this.counter].opcode;
-		var number = io.input[this.counter].number;
+		var operation = this.parseInstruction();
+		console.log(operation);
+		var opcode = operation.opcode;
+		var number = operation.number;
 		instructions[opcode](number);
 
 		this.counter++;
@@ -34,6 +36,17 @@ var processor = {
 			if (!this.continue)
 				break;
 		}
+	},
+	parseInstruction: function() {
+		var currentInstruction = memory[this.counter]; 
+		var number = currentInstruction.slice(1, -1);
+		if (number == "")
+			number = 0;
+
+		return {
+			opcode: currentInstruction.charAt(0),
+			number: number
+		};
 	}
 }
 
@@ -42,25 +55,16 @@ var processor = {
 */
 
 var io = {
-	input: {}, // instruction location # : { opcode: #, number: # }
-	parseInstruction: function() {
+	//input: {}, // instruction location # : { opcode: #, number: # }
+	loadInstructions: function() {
 		var lines = $("#paper-tape-reader").val().split('\n');
-		console.log("lines", lines);
 		for(var i = 0; i < lines.length; i++){
-			var location = processor.counter + i;
-			var number = lines[i].slice(1, -1);
-			if (number == "")
-				number = 0;
-
-			this.input[location] = {
-				opcode: lines[i].charAt(0),
-				number: lines[i].slice(1, -1)
-			}
+			memory[processor.counter + i] = lines[i];
 		}
 	},
 	print: function(number) {
-		var character = memory[number] ? memory[number] : this.input[number];
-		console.log("number", number, this.input[number]);
+		var character = memory[number];
+		console.log("number", number, memory[number]);
 		$("#teleprinter").append(character);
 	},
 	updateDisplays: function() {
