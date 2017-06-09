@@ -4,22 +4,23 @@ var instructions = { //part of the ALU
 		controlUnit.accumulator = 0;
 	},
 	G: function(number) {
-		if (controlUnit.accumulator <= 0)
-			controlUnit.counter = number;
+		if (controlUnit.accumulator < 0)
+			controlUnit.counter = number - 1;
 	},
 	Z: function() {
 		controlUnit.stop();
 		//ring alarm bell
 	},
 	O: function(number) {
-		console.log(number);
 		io.print(number);
 	},
-	A: function(number) {
-		controlUnit.accumulator = alu.add(controlUnit.accumulator, memory[number]);
-		//controlUnit.accumulator = alu.add(controlUnit.accumulator, memory[number]);
+	A: function(number, flag) {
+		controlUnit.accumulator = alu.add(controlUnit.accumulator, memory[number], flag);
 	},
-	P: function(number) { // a constant
-
+	U: function(number) {
+		memory[number] = controlUnit.accumulator;
+	},
+	S: function(number, flag) {
+		controlUnit.accumulator = alu.subtract(controlUnit.accumulator, memory[number], flag);
 	}
 }

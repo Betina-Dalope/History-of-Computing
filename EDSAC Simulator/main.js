@@ -29,7 +29,8 @@ var controlUnit = {
 		var operation = this.parseInstruction();
 		var opcode = operation.opcode;
 		var number = operation.number;
-		instructions[opcode](number);
+		var flag = operation.flag;
+		instructions[opcode](number, flag);
 
 		this.counter++;
 	},
@@ -49,7 +50,8 @@ var controlUnit = {
 
 		return {
 			opcode: currentInstruction.charAt(0),
-			number: number
+			number: number,
+			flag: currentInstruction.slice(-1)
 		};
 	}
 }
@@ -64,25 +66,26 @@ var alu = {
 		var decimal = operation.replace(new RegExp(opcode, "g"), opcodeDecimal);
 		return parseInt(decimal);
 	},
-	decimalToOperation: function(decimal) {
-		if (typeof decimal === "string")
+	decimalToOperation: function(decimal, flag) {
+		if (typeof decimal === "string" || decimal < 0)
 			return decimal;
 
 		var decimalString = decimal.toString();
 		var opcodeDecimal = parseInt(decimalString.charAt(0));
 		var opcode = reverseCharacterCodes[opcodeDecimal];
-		var operation = opcode + decimalString.slice(1);
+		var operation = opcode + decimalString.slice(1) + flag;
 
 		return operation;
 	},
-	add: function(x1, x2) {
-		console.log("add");
-		// if (typeof x1 === "number" && typeof x2 === "number")
-		// 	return x1 + x2;
-		// console.log("add", this.operationToDecimal(x1), this.operationToDecimal(x2));
+	add: function(x1, x2, flag) {
 		var decimalSum = this.operationToDecimal(x1) + this.operationToDecimal(x2);
-		var instructionSum = this.decimalToOperation(decimalSum);
+		var instructionSum = this.decimalToOperation(decimalSum, flag);
 		return instructionSum;
+	},
+	subtract: function(x1, x2, flag) {
+		var decimalDifference = this.operationToDecimal(x1) - this.operationToDecimal(x2);
+		var instructionDifference = this.decimalToOperation(decimalDifference, flag);
+		return instructionDifference;		
 	}
 }
 
@@ -98,7 +101,8 @@ var io = {
 		}
 	},
 	print: function(number) {
-		var character = memory[number].slice(0, -1);;
+		console.log(memory[number]);
+		var character = memory[number].slice(0, -1);
 		$("#teleprinter").append(character);
 	},
 	updateDisplays: function() {

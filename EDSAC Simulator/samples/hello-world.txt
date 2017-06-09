@@ -10,6 +10,16 @@ G33F
 ZF
 P1F
 O56F
-*F HF EF LF LF
+*F
+HF
+EF
+LF
+LF
 OF 
-!F WF OF RF LF DF &F
+!F
+WF
+OF
+RF
+LF
+DF
+&F
