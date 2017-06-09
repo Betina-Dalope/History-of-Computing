@@ -1,23 +1,29 @@
-$(document).ready(function() {
-	$("#location-number").val("0\n1\n2\n3");
-});
+// $(document).ready(function() {
+// 	$("#location-number").val("0\n1\n2\n3");
+// });
 
 var memory = {}; //map of location number : contents
 
 var controlUnit = {
 	counter: -2, // program counter, which instruction it reading
 	accumulator: 0,
-	continue: true,
 	start: function() {
-		io.loadInstructions();
+		if (!io.instrusctionsLoaded)
+			io.loadInstructions();
 		this.execute();
 		io.updateDisplays();
+		
 	},
 	stop: function() {
-		this.continue = false;
 	},
 	reset: function() {
-		counter = -2;
+		io.updateCounter();
+		io.instructionsLoaded = false;
+		controlUnit.accumulator = 0;
+		io.updateDisplays();
+	},
+	clear: function() {
+
 	},
 	singleEP: function() {
 		if (Object.keys(memory).length === 0)
@@ -30,20 +36,20 @@ var controlUnit = {
 		var opcode = operation.opcode;
 		var number = operation.number;
 		var flag = operation.flag;
-		instructions[opcode](number, flag);
 
 		this.counter++;
+
+		return instructions[opcode](number, flag);
 	},
 	execute: function() {
-		for (var instruction in io.input) {
-			this.executeInstruction();
-			if (!this.continue)
-				break;
-		}
+		var instructionSuccess = true;
+		do {
+			instructionSuccess = this.executeInstruction();
+		} while (!this.continue && instructionSuccess)
 	},
 	parseInstruction: function() {
 		var currentInstruction = memory[this.counter]; 
-		console.log(currentInstruction);
+		console.log(this.counter, currentInstruction);
 		var number = currentInstruction.slice(1, -1);
 		if (number == "")
 			number = 0;
@@ -94,11 +100,14 @@ var alu = {
 */
 
 var io = {
+	instrusctionsLoaded: false,
 	loadInstructions: function() {
+		console.log("load", );
 		var lines = $("#paper-tape-reader").val().replace(/ /g, "\r\n").split('\n');
 		for(var i = 0; i < lines.length; i++){
 			memory[controlUnit.counter + i] = lines[i];
 		}
+		this.instrusctionsLoaded = true;
 	},
 	print: function(number) {
 		console.log(memory[number]);
