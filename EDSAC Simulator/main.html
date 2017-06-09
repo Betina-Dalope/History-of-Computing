@@ -6,24 +6,26 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
     <script src="main.js"></script>
     <script src="instructions.js"></script>
+    <script src="character-codes.js"></script>
   </head>
 
   <body>
     <h1>EDSAC Simuloatr</h1>
     <h3>Betina Dalope<br/>mrd88<br/>June 8, 2017</h3>
 
-    <label for="paper-tape-reader">Paper Tape Reader</label><br/>
+    <label for="paper-tape-reader">Location:Paper Tape Reader</label><br/>
+    <textarea id="location-number" rows="20" cols="2" onchange="io.updateCounter()"></textarea>    
     <textarea id="paper-tape-reader" rows="20" cols="10"></textarea>
 
     <label for="teleprinter">Teleprinter</label>
     <div id="teleprinter"></div>
 
     <div id="controls">
-      <btn class="btn" onclick="processor.start()">Start</btn>
+      <btn class="btn" onclick="controlUnit.start()">Start</btn>
       <btn class="btn" name="stop">Stop</btn>
       <btn class="btn" name="clear">Clear</btn>
       <btn class="btn" name="reset">Reset</btn>
-      <btn class="btn" name="singleEP" onclick="processor.singleEP()">Single E.P.</btn>
+      <btn class="btn" name="singleEP" onclick="controlUnit.singleEP()">Single E.P.</btn>
     </div>
 
     <div id="displays">

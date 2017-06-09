@@ -1,21 +1,25 @@
 var instructions = { //part of the ALU
 	T: function(number) {
-		console.log("T", number);
-		memory[number] = processor.accumulator;
-		processor.accumulator = 0;
+		memory[number] = controlUnit.accumulator;
+		controlUnit.accumulator = 0;
 	},
 	G: function(number) {
-		console.log("G");
-		if (processor.accumulator <= 0)
-			processor.counter = number;
+		if (controlUnit.accumulator <= 0)
+			controlUnit.counter = number;
 	},
 	Z: function() {
-		console.log("Z");
-		processor.stop();
+		controlUnit.stop();
 		//ring alarm bell
 	},
 	O: function(number) {
-		console.log("O");
+		console.log(number);
 		io.print(number);
+	},
+	A: function(number) {
+		controlUnit.accumulator = alu.add(controlUnit.accumulator, memory[number]);
+		//controlUnit.accumulator = alu.add(controlUnit.accumulator, memory[number]);
+	},
+	P: function(number) { // a constant
+
 	}
 }
