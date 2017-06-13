@@ -1,28 +1,36 @@
-// $(document).ready(function() {
-// 	$("#location-number").val("0\n1\n2\n3");
-// });
+$(document).ready(function() {
+	$("#location-number").val("31");
+	$("#paper-tape-reader").val("T56F\nZF\nTF\nO43F\nA34F\nA41F\nU34F\nS42F\nG33F\nZF\nP1F\nO56F\n*F\nHF\nEF\nLF\nLF\nOF\n!F\nWF\nOF\nRF\nLF\nDF\n&F");
+	io.updateCounter();
+	io.updateDisplays();
+});
 
 var memory = {}; //map of location number : contents
 
 var controlUnit = {
 	counter: -2, // program counter, which instruction it reading
 	accumulator: 0,
+	continue: true,
 	start: function() {
-		if (!io.instrusctionsLoaded)
+		if (!io.instructionsLoaded)
 			io.loadInstructions();
 		this.execute();
 		io.updateDisplays();
 		
 	},
 	stop: function() {
+		this.continue = false;
 	},
 	reset: function() {
 		io.updateCounter();
 		io.instructionsLoaded = false;
+		memory = {};
 		controlUnit.accumulator = 0;
 		io.updateDisplays();
 	},
 	clear: function() {
+		$("#paper-tape-reader").val("");
+		$("#location-number").val("");
 
 	},
 	singleEP: function() {
@@ -45,7 +53,7 @@ var controlUnit = {
 		var instructionSuccess = true;
 		do {
 			instructionSuccess = this.executeInstruction();
-		} while (!this.continue && instructionSuccess)
+		} while (this.continue && instructionSuccess)
 	},
 	parseInstruction: function() {
 		var currentInstruction = memory[this.counter]; 
@@ -100,19 +108,24 @@ var alu = {
 */
 
 var io = {
-	instrusctionsLoaded: false,
+	instructionsLoaded: false,
 	loadInstructions: function() {
-		console.log("load", );
+		console.log("load");
 		var lines = $("#paper-tape-reader").val().replace(/ /g, "\r\n").split('\n');
 		for(var i = 0; i < lines.length; i++){
 			memory[controlUnit.counter + i] = lines[i];
 		}
-		this.instrusctionsLoaded = true;
+		this.instructionsLoaded = true;
 	},
 	print: function(number) {
-		console.log(memory[number]);
+		var $teleprinter = $("#teleprinter");
 		var character = memory[number].slice(0, -1);
-		$("#teleprinter").append(character);
+		switch (character) {
+			case '*': $teleprinter.html(""); break;
+			case '!': $teleprinter.append(" "); break;
+			case '&': $teleprinter.append("<br/>"); break;
+			default: $teleprinter.append(character);
+		}		
 	},
 	updateDisplays: function() {
 		$("#counter").html(controlUnit.counter);

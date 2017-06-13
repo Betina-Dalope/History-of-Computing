@@ -1,3 +1,11 @@
+Instructions:
+
+  1. start paper tape at 31 (type 31 into the first line of the textarea labeled 'Location')
+  2. copy and paste the following code into the textarea labeled 'Paper Tape Reader'
+  3. click 'Start' twice.  The first time to get to line 33 (ZF), and the 2nd time to run the program.  Or else, hit 'Single E.P.' to go one instruction at a time.
+  4. 'HELLO WORLD' should be printed to the teleprinter
+
+
 T56F
 ZF
 TF

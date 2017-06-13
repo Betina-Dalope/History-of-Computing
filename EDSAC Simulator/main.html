@@ -10,24 +10,25 @@
   </head>
 
   <body>
-    <h1>EDSAC Simuloatr</h1>
+    <h1>EDSAC Simulator</h1>
     <h3>Betina Dalope<br/>mrd88<br/>June 8, 2017</h3>
 
-    <label for="paper-tape-reader">Location:Paper Tape Reader</label><br/>
-    <textarea id="location-number" rows="20" cols="2" onchange="io.updateCounter()"></textarea>    
-    <textarea id="paper-tape-reader" rows="20" cols="10" onchange="io.updateCounter()"></textarea>
+    <label for="paper-tape-reader">Location: Paper Tape Reader</label><br/>
+    <textarea id="location-number" rows="20" cols="2" onchange="io.updateCounter()" style="margin: 0 10px 0 20px"></textarea>    
+    <textarea id="paper-tape-reader" rows="20" cols="10" onchange="io.updateCounter()" style="margin: 0"></textarea>
 
     <br/>
-    <label for="teleprinter">Teleprinter</label>
-    <div id="teleprinter"></div>
 
     <div id="controls">
-      <btn class="btn" onclick="controlUnit.start()">Start</btn>
-      <btn class="btn" name="stop">Stop</btn>
-      <btn class="btn" name="clear" onclick="controlUnit.clear()">Clear</btn>
-      <btn class="btn" name="reset" onclick="controlUnit.reset()">Reset</btn>
-      <btn class="btn" name="singleEP" onclick="controlUnit.singleEP()">Single E.P.</btn>
+      <button class="btn" onclick="controlUnit.start()">Start</button>
+      <button class="btn" name="stop">Stop</btn>
+      <button class="btn" name="clear" onclick="controlUnit.clear()">Clear</button>
+      <button class="btn" name="reset" onclick="controlUnit.reset()">Reset</button>
+      <button class="btn" name="singleEP" onclick="controlUnit.singleEP()">Single E.P.</button>
     </div>
+
+    <label for="teleprinter">Teleprinter</label>
+    <div id="teleprinter"></div><br/>
 
     <div id="displays">
       <label for="counter">Program Counter</label>
