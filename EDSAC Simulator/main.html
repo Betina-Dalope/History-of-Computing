@@ -11,7 +11,11 @@
 
   <body>
     <h1>EDSAC Simulator</h1>
-    <h3>Betina Dalope<br/>mrd88<br/>June 8, 2017</h3>
+    <h3>Betina Dalope</h3>
+
+    <p>This ESAC simulation uses David Wheeler's inital orders, which are variable and constant presets for the machine</p>
+    <p>This simulator is preloaded with a Hello World program, with location # of the first operation set to 31.  To run the program, click 'Start'.  The first 2 lines of this code halt the program, so click 'Start' again and 'Hello World' should print to the teleprinter.  Alternatively, hit Single E.P. execute one instruction at a time.</p>
+    <p>Click 'Reset' to reset the program counter, the accumulator, and the teleprinter, and reset the memory to before the program was executed.  Click 'Clear' to clear the Paper Tape Reader and the Location textareas.  If the program is running indefinitely, hit 'Stop' to halt the program's execution</p>
 
     <label for="paper-tape-reader">Location: Paper Tape Reader</label><br/>
     <textarea id="location-number" rows="20" cols="2" onchange="io.updateCounter()" style="margin: 0 10px 0 20px"></textarea>    
